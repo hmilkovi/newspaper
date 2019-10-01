@@ -16,7 +16,6 @@ async def render_js(url, headless=False, proxy=None, sleep=0.1):
     return html
 
 def rendered_page(url, headless=True, proxy=None, sleep=0.1):
-    loop = asyncio.get_event_loop()
-    html = loop.run_until_complete(render_js(url, headless=headless, proxy=proxy, sleep=sleep))
+    html = asyncio.run(render_js(url, headless=headless, proxy=proxy, sleep=sleep))
     loop.close()
     return html
