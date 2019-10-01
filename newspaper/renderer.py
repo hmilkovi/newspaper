@@ -3,6 +3,7 @@ import time
 
 def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
     if headless:
         chrome_options.add_argument('--headless')
     if proxy:
