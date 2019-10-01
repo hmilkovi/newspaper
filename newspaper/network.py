@@ -11,6 +11,7 @@ __copyright__ = 'Copyright 2014, Lucas Ou-Yang'
 import logging
 import requests
 
+from .renderer import rendered_page
 from .configuration import Configuration
 from .mthreading import ThreadPool
 from .settings import cj
@@ -44,7 +45,7 @@ def get_html(url, config=None, response=None):
         return ''
 
 
-def get_html_2XX_only(url, config=None, response=None):
+def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None):
     """Consolidated logic for http requests from newspaper. We handle error cases:
     - Attempt to find encoding of the html by using HTTP header. Fallback to
       'ISO-8859-1' if not provided.
@@ -55,6 +56,10 @@ def get_html_2XX_only(url, config=None, response=None):
     timeout = config.request_timeout
     proxies = config.proxies
     headers = config.headers
+    import pdb; pdb.set_trace()
+    if js:
+        html = rendered_page(url, proxy=proxy, sleep=4)
+        return html
 
     if response is not None:
         return _get_html_from_response(response, config)

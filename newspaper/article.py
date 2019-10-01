@@ -171,15 +171,15 @@ class Article(object):
             self.download_exception_msg = e.strerror
             return None
 
-    def _parse_scheme_http(self):
+    def _parse_scheme_http(self, js=False, proxy=None, sleep=4, headless=True):
         try:
-            return network.get_html_2XX_only(self.url, self.config)
-        except requests.exceptions.RequestException as e:
+            return network.get_html_2XX_only(self.url, self.config, js=js, proxy=proxy, sleep=sleep, headless=headless)
+        except Exception as e:
             self.download_state = ArticleDownloadState.FAILED_RESPONSE
             self.download_exception_msg = str(e)
             return None
 
-    def download(self, input_html=None, title=None, recursion_counter=0):
+    def download(self, input_html=None, title=None, recursion_counter=0, js=False, proxy=None, sleep=4, headless=True):
         """Downloads the link's HTML content, don't use if you are batch async
         downloading articles
 
@@ -191,7 +191,7 @@ class Article(object):
             if parsed_url.scheme == "file":
                 html = self._parse_scheme_file(parsed_url.path)
             else:
-                html = self._parse_scheme_http()
+                html = self._parse_scheme_http(js=js, proxy=proxy, sleep=4, headless=headless)
             if html is None:
                 log.debug('Download failed on URL %s because of %s' %
                           (self.url, self.download_exception_msg))
