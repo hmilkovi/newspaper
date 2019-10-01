@@ -45,7 +45,7 @@ def get_html(url, config=None, response=None):
         return ''
 
 
-def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None):
+def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None, sleep=0.1, headless=True):
     """Consolidated logic for http requests from newspaper. We handle error cases:
     - Attempt to find encoding of the html by using HTTP header. Fallback to
       'ISO-8859-1' if not provided.
@@ -56,9 +56,8 @@ def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None):
     timeout = config.request_timeout
     proxies = config.proxies
     headers = config.headers
-    import pdb; pdb.set_trace()
     if js:
-        html = rendered_page(url, proxy=proxy, sleep=4)
+        html = rendered_page(url, proxy=proxy, sleep=sleep, headless=headless)
         return html
 
     if response is not None:
