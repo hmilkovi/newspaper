@@ -11,5 +11,6 @@ def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     driver.get(url)
     time.sleep(sleep)
     html = driver.page_source
-    driver.close()
+    time.sleep(0.5)
+    driver.quit()
     return html
