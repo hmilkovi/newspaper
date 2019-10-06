@@ -63,12 +63,13 @@ def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None, sle
     if response is not None:
         return _get_html_from_response(response, config)
 
-    response = requests.get(
-        url=url, **get_request_kwargs(timeout, useragent, proxies, headers))
+    if not js
+        response = requests.get(
+            url=url, **get_request_kwargs(timeout, useragent, proxies, headers))
 
     html = _get_html_from_response(response, config)
 
-    if config.http_success_only:
+    if config.http_success_only and not js:
         # fail if HTTP sends a non 2XX response
         response.raise_for_status()
 
