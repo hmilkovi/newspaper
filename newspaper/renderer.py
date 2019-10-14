@@ -1,14 +1,10 @@
 from selenium import webdriver
-from fake_useragent import UserAgent
 import time
-
-ua = UserAgent()
 
 def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--no-sandbox')
-    global ua
-    userAgent = ua.random
+    userAgent = 'Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0'
     chrome_options.add_argument(f'user-agent={userAgent}')
     if headless:
         chrome_options.add_argument('--headless')
