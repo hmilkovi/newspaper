@@ -63,7 +63,7 @@ def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None, sle
     if response is not None:
         return _get_html_from_response(response, config)
 
-    if not js
+    if not js:
         response = requests.get(
             url=url, **get_request_kwargs(timeout, useragent, proxies, headers))
 
