@@ -6,12 +6,14 @@ def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options.add_argument('--no-sandbox')
     userAgent = 'Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101 Firefox/60.0'
     chrome_options.add_argument(f'user-agent={userAgent}')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument("--window-size=1920, 1200")
     if headless:
         chrome_options.add_argument('--headless')
     if proxy:
         chrome_options.add_argument('--proxy-server={}'.format(proxy))
     driver = webdriver.Chrome(options=chrome_options)
-    driver.set_window_size(1920, 1200)
     driver.get(url)
     time.sleep(sleep)
     if 'One more step' in driver.page_source:
