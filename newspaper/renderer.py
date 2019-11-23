@@ -1,7 +1,8 @@
 from selenium import webdriver
 import time
+import os
 
-SELENIUM_HUB = s.environ.get('HUB', None)
+SELENIUM_HUB = os.environ.get('HUB', None)
 
 def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options = webdriver.ChromeOptions()
