@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 
+SELENIUM_HUB = s.environ.get('HUB', None)
 
 def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options = webdriver.ChromeOptions()
@@ -9,12 +10,16 @@ def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options.add_argument(f'user-agent={userAgent}')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument("--disable-javascript")
     chrome_options.add_argument("--window-size=1920, 1200")
     if headless:
         chrome_options.add_argument('--headless')
     if proxy:
         chrome_options.add_argument('--proxy-server={}'.format(proxy))
-    driver = webdriver.Chrome(options=chrome_options)
+    if SELENIUM_HUB:
+        driver = webdriver.Remote(command_executor=SELENIUM_HUB)
+    else:
+        driver = webdriver.Chrome(options=chrome_options)
     driver.get(url)
     time.sleep(sleep)
     if 'One more step' in driver.page_source:
