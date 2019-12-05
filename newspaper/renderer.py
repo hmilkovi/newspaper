@@ -13,6 +13,8 @@ def rendered_page(url, headless=False, proxy=None, sleep=0.1):
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument("--disable-javascript")
     chrome_options.add_argument("--window-size=1920, 1200")
+    chrome_options.add_argument('--single-process')
+    chrome_options.add_argument('--disable-dev-shm-usage')
     if headless:
         chrome_options.add_argument('--headless')
     if proxy:

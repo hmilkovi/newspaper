@@ -65,7 +65,7 @@ def get_html_2XX_only(url, config=None, response=None, js=False, proxy=None, sle
 
     if not js:
         response = requests.get(
-            url=url, **get_request_kwargs(timeout, useragent, proxies, headers))
+            url=url, **get_request_kwargs(timeout, useragent, proxies, headers), verify=False)
 
     html = _get_html_from_response(response, config)
 
@@ -112,7 +112,7 @@ class MRequest(object):
     def send(self):
         try:
             self.resp = requests.get(self.url, **get_request_kwargs(
-                self.timeout, self.useragent, self.proxies, self.headers))
+                self.timeout, self.useragent, self.proxies, self.headers), verify=False)
             if self.config.http_success_only:
                 self.resp.raise_for_status()
         except requests.exceptions.RequestException as e:
